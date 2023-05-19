@@ -1,0 +1,157 @@
+import { motion } from "framer-motion";
+import NavExample from "../NavExample";
+
+## Introduction
+
+Framer motion is an animation library for React. It offers numerous methods to add motion to your application. Working with the library is super declarative! The syntax is CSS-inspired, making it easy to jump in.
+
+### Installation
+
+`npm i framer-motion`
+
+### The `<motion />` component attaches to any HTML or SVG element
+
+All JSX intrinsic elements are supported.
+
+`div`, `span`, `a`, `nav`, `svg`...
+
+```tsx
+import { motion } from "framer-motion";
+
+<motion.div
+  initial={{ opacity: 0 }}
+  animate={{ opacity: 1 }}
+  transition={{ duration: 1.2 }}
+/>;
+```
+
+<div style={{ height: "400px" }} />
+#### Taken further...
+<div style={{ height: "200px" }} />
+
+```tsx
+<motion.div
+  animate={{
+    scale: [1, 2, 2, 1, 1],
+    rotate: [0, 0, 270, 270, 0],
+    borderRadius: ["20%", "20%", "50%", "50%", "20%"],
+  }}
+  transition={{
+    duration: 2,
+    ease: "easeInOut",
+    times: [0, 0.2, 0.5, 0.8, 1],
+    repeat: Infinity,
+    repeatDelay: 1,
+  }}
+/>
+```
+
+<div
+  className="flex justify-center items-center"
+  style={{ height: "250px", alignItems: "center" }}
+>
+  <motion.div
+    style={{ height: "100px", width: "100px", backgroundColor: "white" }}
+    animate={{
+      scale: [1, 2, 2, 1, 1],
+      rotate: [0, 0, 270, 270, 0],
+      borderRadius: ["20%", "20%", "50%", "50%", "20%"],
+    }}
+    transition={{
+      duration: 2,
+      ease: "easeInOut",
+      times: [0, 0.2, 0.5, 0.8, 1],
+      repeat: Infinity,
+      repeatDelay: 1,
+    }}
+  />
+</div>
+
+## Variants
+
+#### Combine animations within components, propogate down the DOM, and orchestrate together.
+
+<div className="flex justify-center">
+  <NavExample />
+</div>
+```tsx
+<motion.div initial={false} animate={isOpen ? "open" : "closed"}>
+  <motion.button whileTap={{ scale: 0.97 }} onClick={() => setIsOpen(!isOpen)}>
+    Menu
+    <motion.div
+      variants={{
+        open: { rotate: 180 },
+        closed: { rotate: 0 },
+      }}
+      transition={{ duration: 0.2 }}
+      style={{ originY: 0.55 }}
+    >
+      <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor">
+        <path d="M0 7 L 20 7 L 10 16" />
+      </svg>
+    </motion.div>
+  </motion.button>
+  <motion.ul
+    variants={{
+      open: {
+        clipPath: "inset(0% 0% 0% 0% round 10px)",
+        transition: {
+          type: "spring",
+          bounce: 0,
+          duration: 0.7,
+          delayChildren: 0.3,
+          staggerChildren: 0.05,
+        },
+      },
+      closed: {
+        clipPath: "inset(10% 50% 90% 50% round 10px)",
+        transition: {
+          type: "spring",
+          bounce: 0,
+          duration: 0.3,
+        },
+      },
+    }}
+  >
+    <motion.li
+      className="p-3"
+      variants={{
+        open: {
+          opacity: 1,
+          y: 0,
+          transition: { type: "spring", stiffness: 300, damping: 24 },
+        },
+        closed: { opacity: 0, y: 20, transition: { duration: 0.2 } },
+      }}
+    >
+      Item 1
+    </motion.li>
+  </motion.ul>
+</motion.div>
+```
+
+## Gestures
+
+#### Hover, Tap, Drag...
+
+```tsx
+<motion.div
+  whileHover={{ scale: 1.2 }}
+  whileTap={{ scale: 0.9 }}
+  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+/>
+```
+
+<div className="flex justify-center">
+  <motion.div
+    style={{
+      width: "200px",
+      height: "50px",
+      background: "orange",
+      borderRadius: "50px",
+    }}
+    whileHover={{ scale: 1.2 }}
+    whileTap={{ scale: 0.9 }}
+    transition={{ type: "spring", stiffness: 400, damping: 17 }}
+  />
+</div>

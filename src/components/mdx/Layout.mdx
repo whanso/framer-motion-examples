@@ -1,0 +1,41 @@
+import Circle from "../Circle";
+
+### Use `AnimatePresence` to animate components when they are removed from the DOM tree.
+
+```tsx
+import { motion, AnimatePresence } from "framer-motion";
+
+export const MyComponent = ({ isVisible }) => (
+  <AnimatePresence>
+    {isVisible && (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      />
+    )}
+  </AnimatePresence>
+);
+```
+
+#### React Router Outlet Enter / Exit Animation
+
+```tsx
+const AnimatedOutlet: React.FC = () => {
+  const o = useOutlet();
+  const [outlet] = useState(o);
+
+  return <>{outlet}</>;
+};
+
+<AnimatePresence mode="popLayout">
+  <motion.div
+    key={location.pathname}
+    initial={{ opacity: 0, x: 50 }}
+    animate={{ opacity: 1, x: 0 }}
+    exit={{ opacity: 0, x: 50 }}
+  >
+    <AnimatedOutlet />
+  </motion.div>
+</AnimatePresence>;
+```
